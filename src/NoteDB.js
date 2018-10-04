@@ -1,8 +1,8 @@
 // @flow
 
-type ID = string;
+export type ID = string;
 
-type Note = {
+export type Note = {
     id: ID,
     title: string,
     content: string,
@@ -12,16 +12,20 @@ type Note = {
 export default class NoteDB {
     notedb: Map<string, Note>;
     nextid: number;
-    onChange: (NoteDB) => void;
+    onChangeCb: (NoteDB) => void;
 
     constructor(onChange: ?(NoteDB) => void) {
         this.notedb = new Map();
         this.nextid = 1;
-        this.onChange = onChange;
+        this.onChangeCb = onChange;
     }
 
     _nextId() {
         return `${this.nextid++}`;
+    }
+
+    onChange(fn: ?(NoteDB) => void) {
+        this.onChangeCb = fn;
     }
 
     createNote(title: string, content: string): Note {
@@ -35,8 +39,8 @@ export default class NoteDB {
 
         this.notedb.set(newId, newNote);
 
-        if(this.onChange) {
-            this.onChange(this);
+        if(this.onChangeCb) {
+            this.onChangeCb(this);
         }
 
         return newNote;
@@ -53,8 +57,8 @@ export default class NoteDB {
 
             this.notedb.set(id, newNote);
 
-            if(this.onChange) {
-                this.onChange(this);
+            if(this.onChangeCb) {
+                this.onChangeCb(this);
             }
 
             return newNote;
