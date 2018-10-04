@@ -40,15 +40,23 @@ export default class App extends React.Component<AppProps, AppState> {
         });
     }
 
+    onNoteChange(id: ID, title: string, content: string) {
+        this.state.noteDb.updateNote(id, title, content);
+    }
+
     render() {
         return (
             <Router>
                 <div>
                     <Route exact path="/" render={ () => (
-                        <Page noteList={this.state.noteList} currentNote={null}/>
+                        <Page noteList={this.state.noteList}
+                              onNoteChangeFn={this.onNoteChange.bind(this)}
+                              currentNote={null}/>
                     )}/>
                     <Route path="/note/:id" render={ ({match}) => (
-                        <Page noteList={this.state.noteList} currentNote={this.state.noteDb.getNote(match.params.id)}/>
+                        <Page noteList={this.state.noteList}
+                              onNoteChangeFn={this.onNoteChange.bind(this)}
+                              currentNote={this.state.noteDb.getNote(match.params.id)}/>
                     )}/>
                 </div>
             </Router>
