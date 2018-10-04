@@ -3,7 +3,6 @@ import * as React from 'react';
 import type {Note, ID} from "./NoteDB";
 import ContentEditable from 'react-contenteditable';
 import glamorous from 'glamorous';
-import sanitizeHtml from 'sanitize-html';
 import {formatDateAndTime} from './dateUtils';
 
 export type OnNoteChangeFn = (id: ID, title: string, content: string) => void;
@@ -25,12 +24,17 @@ const TitleEditor = glamorous(ContentEditable)({
     height: '3rem',
     display: 'block',
     borderBottom: '1px solid grey',
+    padding: '0.5rem',
+    margin: '0.5rem',
+    whiteSpace: 'nowrap',
 });
 
 const ContentEditor = glamorous(ContentEditable)({
     display: 'block',
     boxSizing: 'border-box',
     flexGrow: 1,
+    overflowY: 'scroll',
+    margin: '1em',
 });
 
 const DateBar = glamorous.div({
@@ -40,18 +44,10 @@ const DateBar = glamorous.div({
     textAlign: 'center',
 });
 
-const sanitizeConf = {
-    allowedTags: ["b", "i", "em", "strong", "a", "p", "h1"],
-};
-
-const formatTitle = (html): string => {
-    return sanitizeHtml(html.replace(/ /g, '&nbsp;'), sanitizeConf);
-};
-
 const NoteEditor = ({note, onNoteChange}: NoteEditorProps) => (
     <EditorContainer>
         <DateBar>Last edited: {formatDateAndTime(new Date(note.lastModified))}</DateBar>
-        <TitleEditor tagName="h2" html={note.title} onChange={ (e) => onNoteChange(note.id, formatTitle(e.target.value), note.content) }/>
+        <TitleEditor tagName="h2" html={note.title} onChange={ (e) => onNoteChange(note.id, e.target.value, note.content) }/>
         <ContentEditor html={note.content} onChange={ (e) => onNoteChange(note.id, note.title, e.target.value) }/>
     </EditorContainer>
 );

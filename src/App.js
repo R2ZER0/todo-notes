@@ -41,7 +41,10 @@ export default class App extends React.Component<AppProps, AppState> {
     }
 
     onNoteChange(id: ID, title: string, content: string) {
-        this.state.noteDb.updateNote(id, title, content);
+        let note: Note = this.state.noteDb.getNote(id);
+        if(JSON.stringify(note.title) !== JSON.stringify(title) || JSON.stringify(note.content) !== JSON.stringify(content)) {
+            this.state.noteDb.updateNote(id, title, content);
+        }
     }
 
     _createNote() {

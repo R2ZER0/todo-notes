@@ -1,3 +1,5 @@
+import '@babel/polyfill';
+import 'airbnb-js-shims';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import 'normalize.css';
