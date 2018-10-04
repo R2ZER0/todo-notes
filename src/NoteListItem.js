@@ -9,11 +9,14 @@ const ItemContainer = glamorous.div({
     height: '5rem',
     width: '100%',
     boxSizing: 'border-box',
-    padding: '1rem',
+    padding: '0.5rem',
+    border: '1px solid #ccc',
+    marginBottom: '0.4rem',
+    backgroundColor: '#F5F5DC',
 });
 
 const Title = glamorous.div({
-    marginBottom: '0.5rem',
+    marginBottom: '0.2rem',
 });
 
 const Modified = glamorous.div({

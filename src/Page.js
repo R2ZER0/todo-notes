@@ -18,7 +18,6 @@ const NoteListContainer = glamorous.div({
     boxSizing: 'border-box',
     width: '15vw',
     minWidth: '15rem',
-    borderRight: '1px solid cyan'
 });
 
 const NoteEditorContainer = glamorous.div({
