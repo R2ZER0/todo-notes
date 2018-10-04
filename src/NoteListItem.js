@@ -13,6 +13,7 @@ const ItemContainer = glamorous.div({
     border: '1px solid #ccc',
     marginBottom: '0.4rem',
     backgroundColor: '#F5F5DC',
+    overflow: 'hidden',
 });
 
 const Title = glamorous.div({
