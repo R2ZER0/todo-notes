@@ -4,6 +4,7 @@ import NoteList from "./NoteList";
 import NoteEditor from "./NoteEditor";
 import type {Note, ID} from './NoteDB';
 import type {OnNoteChangeFn} from "./NoteEditor";
+import type {CreateNoteFn} from "./NoteList";
 import glamorous from 'glamorous';
 
 const PageContainer = glamorous.div({
@@ -30,12 +31,13 @@ type PageProps = {
     noteList: Array<Note>,
     currentNote: ?Note,
     onNoteChangeFn: OnNoteChangeFn,
+    createNoteFn: CreateNoteFn,
 };
 
-const Page = ({noteList, currentNote, onNoteChangeFn}: PageProps) => (
+const Page = ({noteList, currentNote, onNoteChangeFn, createNoteFn}: PageProps) => (
     <PageContainer>
         <NoteListContainer>
-            <NoteList noteList={noteList}/>
+            <NoteList noteList={noteList} createNoteFn={createNoteFn}/>
         </NoteListContainer>
         <NoteEditorContainer>
             { currentNote ?

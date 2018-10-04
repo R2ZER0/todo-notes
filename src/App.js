@@ -44,22 +44,31 @@ export default class App extends React.Component<AppProps, AppState> {
         this.state.noteDb.updateNote(id, title, content);
     }
 
+    _createNote() {
+        this.state.noteDb.createNote("New Note", "Start writing here!");
+    }
+
     render() {
         return (
             <Router>
                 <div>
                     <Route exact path="/" render={ () => (
-                        <Page noteList={this.state.noteList}
-                              onNoteChangeFn={this.onNoteChange.bind(this)}
-                              currentNote={null}/>
+                        this.renderPage(null)
                     )}/>
                     <Route path="/note/:id" render={ ({match}) => (
-                        <Page noteList={this.state.noteList}
-                              onNoteChangeFn={this.onNoteChange.bind(this)}
-                              currentNote={this.state.noteDb.getNote(match.params.id)}/>
+                        this.renderPage(this.state.noteDb.getNote(match.params.id))
                     )}/>
                 </div>
             </Router>
+        );
+    }
+
+    renderPage(currentNote: ?Note) {
+        return (
+            <Page noteList={this.state.noteList}
+                  onNoteChangeFn={this.onNoteChange.bind(this)}
+                  createNoteFn={this._createNote.bind(this)}
+                  currentNote={currentNote}/>
         );
     }
 
