@@ -31,7 +31,7 @@ type NoteListItemProps = {
 const NoteListItem = ({note}: NoteListItemProps) => (
     <Link to={`/note/${note.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
         <ItemContainer>
-            <Title>{note.title}</Title>
+            <Title><div dangerouslySetInnerHTML={{ __html: note.title} /* Our notes are html formatted */}/></Title>
             <Modified>{formatDate(new Date(note.lastModified))}</Modified>
         </ItemContainer>
     </Link>
