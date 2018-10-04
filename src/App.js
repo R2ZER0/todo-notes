@@ -10,7 +10,6 @@ type AppProps = {};
 type AppState = {
     noteDb: NoteDB;
     noteList: Array<Note>,
-    currentNote: ?Note,
 };
 
 
