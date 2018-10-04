@@ -4,6 +4,7 @@ import type {Note, ID} from "./NoteDB";
 import ContentEditable from 'react-contenteditable';
 import glamorous from 'glamorous';
 import sanitizeHtml from 'sanitize-html';
+import {formatDateAndTime} from './dateUtils';
 
 export type OnNoteChangeFn = (id: ID, title: string, content: string) => void;
 
@@ -32,6 +33,13 @@ const ContentEditor = glamorous(ContentEditable)({
     flexGrow: 1,
 });
 
+const DateBar = glamorous.div({
+    height: '1rem',
+    color: 'grey',
+    fontSize: '0.85rem',
+    textAlign: 'center',
+});
+
 const sanitizeConf = {
     allowedTags: ["b", "i", "em", "strong", "a", "p", "h1"],
 };
@@ -42,6 +50,7 @@ const formatTitle = (html): string => {
 
 const NoteEditor = ({note, onNoteChange}: NoteEditorProps) => (
     <EditorContainer>
+        <DateBar>Last edited: {formatDateAndTime(new Date(note.lastModified))}</DateBar>
         <TitleEditor tagName="h2" html={note.title} onChange={ (e) => onNoteChange(note.id, formatTitle(e.target.value), note.content) }/>
         <ContentEditor html={note.content} onChange={ (e) => onNoteChange(note.id, note.title, e.target.value) }/>
     </EditorContainer>
